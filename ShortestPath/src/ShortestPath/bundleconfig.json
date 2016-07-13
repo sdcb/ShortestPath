@@ -10,16 +10,16 @@
   {
     "outputFileName": "wwwroot/min/engine.min.js",
     "inputFiles": [
-      "wwwroot/lib/app/Engine/float3x2.js",
-      "wwwroot/lib/app/Engine/PromiseEvent.js",
-      "wwwroot/lib/app/Engine/CanvasManager.js",
-      "wwwroot/lib/app/Engine/SimpleGameLoop.js",
-      "wwwroot/lib/app/Engine/TimedGameLoop.js",
-      "wwwroot/lib/app/Engine/RendererBase.js",
-      "wwwroot/lib/app/Engine/Scene.js",
-      "wwwroot/lib/app/Engine/FpsRenderer.js",
-      "wwwroot/lib/app/Engine/ClockRenderer.js",
-      "wwwroot/lib/app/Engine/AlignToWindowUtil.js"
+      "wwwroot/app/Engine/float3x2.js",
+      "wwwroot/app/Engine/PromiseEvent.js",
+      "wwwroot/app/Engine/CanvasManager.js",
+      "wwwroot/app/Engine/SimpleGameLoop.js",
+      "wwwroot/app/Engine/TimedGameLoop.js",
+      "wwwroot/app/Engine/RendererBase.js",
+      "wwwroot/app/Engine/Scene.js",
+      "wwwroot/app/Engine/FpsRenderer.js",
+      "wwwroot/app/Engine/ClockRenderer.js",
+      "wwwroot/app/Engine/AlignToWindowUtil.js"
     ]
   }
 ]

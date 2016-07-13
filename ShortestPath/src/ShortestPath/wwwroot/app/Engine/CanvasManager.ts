@@ -164,9 +164,14 @@
         }
 
         constructor(private canvas: HTMLCanvasElement) {
-            this.ctx = canvas.getContext("2d");
-            this.ctx.textBaseline = "top";
-            this.ctx.font = "14pt Consolas";
+            let ctx = canvas.getContext("2d");
+            if (ctx) {
+                this.ctx = ctx;
+                this.ctx.textBaseline = "top";
+                this.ctx.font = "14pt Consolas";
+            } else {
+                throw new Error("Your browser not support canvas");
+            }
         }
     }
 }

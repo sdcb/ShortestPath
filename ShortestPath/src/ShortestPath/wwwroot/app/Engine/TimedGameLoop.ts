@@ -23,6 +23,7 @@
                 this.onRunningSlow.fire(frameTime);
                 return true;
             }
+            return false;
         }
 
         roundPerSecond(round: number) {
