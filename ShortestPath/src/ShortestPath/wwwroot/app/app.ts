@@ -64,26 +64,26 @@
 
         static createDefault() {
             let array = [
-                "        *           ",
-                "    *******         ",
-                "    *     *         ",
-                "   **     *         ",
-                "    *     *         ",
-                "          *         ",
-                "          *         ",
-                "                    ",
+                "+                   ",
+                "    * *****         ",
+                "    *               ",
+                "   **               ", 
                 "    *               ",
                 "    *     *         ",
-                "    *   + *    O    ",
+                "          *         ",
                 "    *     *         ",
-                "    *    **         ",
-                "    *******         ",
+                "    *     *  *      ",
+                "    *     *  *****  ",
+                "    *     *  *      ",
+                "***       *  *      ",
+                "    *        *      ",
+                " **********  *  ****",
+                "          *  *      ",
+                "             *      ",
+                "        ******      ",
                 "                    ",
-                "                    ",
-                "                    ",
-                "                    ",
-                "                    ",
-                "                    "
+                "        *           ",
+                "        *          O"
             ];
             return new MazeInput(array);
         }
@@ -114,6 +114,23 @@
         }
     }
 
+    class TravelBlock extends Vector2 {
+        blocks(): Vector2[] {
+            return [];
+        }
+    }
+
+    class HourseBlocks extends TravelBlock {
+        blocks() {
+            let m = Math.abs(this.x) > Math.abs(this.y) ? this.x : this.y;
+            if (m === this.x) {
+                return [new Vector2(m / 2, 0)];
+            } else {
+                return [new Vector2(0, m / 2)];
+            }
+        }
+    }
+
     class MazeTravelContext {
         visitArray: Array<MazeVisitItem | null>[];
         availablePoints: MazeVisitItem[];
@@ -125,51 +142,28 @@
             this.availablePoints.push(v);
         }
 
-        private isPositionOk(x: number, y: number) {
+        private isPositionOk(from: Vector2, travel: TravelBlock) {
             let okTypes = [MazeType.Empty, MazeType.Dist];
 
-            if (this.input.at(x, y) === MazeType.OutOfBound) {
-                return false;
-            } else if (this.visitArray[y][x] !== null) {
-                return false;
-            } else if (okTypes.indexOf(this.input.at(x, y)) === -1) {
-                return false;
-            } else {
-                return true;
-            }
-        }
-
-        private isOutOfBound(x: number, y: number) {
-            let okTypes = [MazeType.Empty, MazeType.Dist];
-
-            if (this.input.at(x, y) === MazeType.OutOfBound) {
-                return false;
-            //} else if (okTypes.indexOf(this.input.at(x, y)) === -1) {
-            //    return false;
-            } else {
-                return true;
-            }
-        }
-
-        private isPositionOkInBlock(toX: number, toY: number, fromX: number, fromY: number) {
-            if (!this.isPositionOk(toX, toY)) return false;
-
-            function sign(v: number) {
-                return v > 0 ? 1 : -1;
-            }
-            let dirX = sign(toX - fromX);
-            let dirY = sign(toY - fromY);
-            let less = (dir: number, v1: number, v2: number) => dir > 0 ? v1 <= v2 : v2 <= v1;
-
-            console.log("start");
-            for (let nx = fromX + dirX; less(dirX, nx, toX); nx += dirX) {
-                for (let ny = fromY + dirY; less(dirY, ny, toY); ny += dirY) {
-                    console.log(nx, ny);
-                    if (!this.isOutOfBound(nx, ny)) return false;
+            for (let p of travel.blocks()) {
+                let block = from.by(p);
+                if (this.input.at(block.x, block.y) === MazeType.OutOfBound) {
+                    return false;
+                } else if (okTypes.indexOf(this.input.at(block.x, block.y)) === -1) {
+                    return false;
                 }
             }
 
-            return true;
+            let to = from.by(travel);
+            if (this.input.at(to.x, to.y) === MazeType.OutOfBound) {
+                return false;
+            } else if (this.visitArray[to.y][to.x] !== null) {
+                return false;
+            } else if (okTypes.indexOf(this.input.at(to.x, to.y)) === -1) {
+                return false;
+            } else {
+                return true;
+            }
         }
 
         private generateResult() {
@@ -199,8 +193,8 @@
                 let from = this.availablePoints[i];
 
                 for (let travelItem of this.travels) {
-                    let to = from.p.by(travelItem);
-                    if (this.isPositionOkInBlock(to.x, to.y, from.p.x, from.p.y)) {
+                    if (this.isPositionOk(from.p, travelItem)) {
+                        let to = from.p.by(travelItem);
                         this.newAvailabelPoint(new MazeVisitItem(from.step + 1, to, from));
                         if (to.equals(dist)) {
                             this.onComplete.fire(this.generateResult());
@@ -224,16 +218,16 @@
 
             this.availablePoints = [];
             this.newAvailabelPoint(MazeVisitItem.createBorn(this.input.born()));
-            
+
             this.travelOneLevel(0);
         }
 
         constructor(
             private readonly input: MazeInput,
-            private readonly travels: Vector2[]) {
+            private readonly travels: TravelBlock[]) {
         }
 
-        static travel(input: MazeInput, travels: Vector2[]) {
+        static travel(input: MazeInput, travels: TravelBlock[]) {
             let ctx = new MazeTravelContext(input, travels);
             let defer = $.Deferred<MazeVisitItem[]>();
 
@@ -248,14 +242,14 @@
     class MazeSystem {
         input = MazeInput.createDefault();
         travels = [
-            new Vector2(2, 1),
-            new Vector2(2, -1),
-            new Vector2(1, 2),            
-            new Vector2(1, -2),
-            new Vector2(-2, 1),
-            new Vector2(-2, -1),
-            new Vector2(-1, 2),
-            new Vector2(-1, -2),
+            new HourseBlocks(2, 1),
+            new HourseBlocks(2, -1),
+            new HourseBlocks(1, 2),
+            new HourseBlocks(1, -2),
+            new HourseBlocks(-2, 1),
+            new HourseBlocks(-2, -1),
+            new HourseBlocks(-1, 2),
+            new HourseBlocks(-1, -2),
             //new Vector2(1, 0),
             //new Vector2(0, 1),
             //new Vector2(-1, 0),
