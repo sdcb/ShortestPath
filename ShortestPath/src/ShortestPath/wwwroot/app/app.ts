@@ -71,12 +71,12 @@
                 "    *     *         ",
                 "          *         ",
                 "          *         ",
-                "          *         ",
+                "                    ",
+                "    *               ",
                 "    *     *         ",
+                "    *   + *    O    ",
                 "    *     *         ",
-                "    *    +*    O    ",
-                "    *     *         ",
-                "    *     *         ",
+                "    *    **         ",
                 "    *******         ",
                 "                    ",
                 "                    ",
@@ -139,6 +139,39 @@
             }
         }
 
+        private isOutOfBound(x: number, y: number) {
+            let okTypes = [MazeType.Empty, MazeType.Dist];
+
+            if (this.input.at(x, y) === MazeType.OutOfBound) {
+                return false;
+            //} else if (okTypes.indexOf(this.input.at(x, y)) === -1) {
+            //    return false;
+            } else {
+                return true;
+            }
+        }
+
+        private isPositionOkInBlock(toX: number, toY: number, fromX: number, fromY: number) {
+            if (!this.isPositionOk(toX, toY)) return false;
+
+            function sign(v: number) {
+                return v > 0 ? 1 : -1;
+            }
+            let dirX = sign(toX - fromX);
+            let dirY = sign(toY - fromY);
+            let less = (dir: number, v1: number, v2: number) => dir > 0 ? v1 <= v2 : v2 <= v1;
+
+            console.log("start");
+            for (let nx = fromX + dirX; less(dirX, nx, toX); nx += dirX) {
+                for (let ny = fromY + dirY; less(dirY, ny, toY); ny += dirY) {
+                    console.log(nx, ny);
+                    if (!this.isOutOfBound(nx, ny)) return false;
+                }
+            }
+
+            return true;
+        }
+
         private generateResult() {
             let result = Array<MazeVisitItem>();
 
@@ -167,12 +200,12 @@
 
                 for (let travelItem of this.travels) {
                     let to = from.p.by(travelItem);
-                    if (this.isPositionOk(to.x, to.y)) {
+                    if (this.isPositionOkInBlock(to.x, to.y, from.p.x, from.p.y)) {
                         this.newAvailabelPoint(new MazeVisitItem(from.step + 1, to, from));
-                    }
-                    if (to.equals(dist)) {
-                        this.onComplete.fire(this.generateResult());
-                        return;
+                        if (to.equals(dist)) {
+                            this.onComplete.fire(this.generateResult());
+                            return;
+                        }
                     }
                 }
             }
@@ -191,7 +224,7 @@
 
             this.availablePoints = [];
             this.newAvailabelPoint(MazeVisitItem.createBorn(this.input.born()));
-
+            
             this.travelOneLevel(0);
         }
 
@@ -216,9 +249,19 @@
         input = MazeInput.createDefault();
         travels = [
             new Vector2(2, 1),
-            new Vector2(1, 2),
             new Vector2(2, -1),
+            new Vector2(1, 2),            
             new Vector2(1, -2),
+            new Vector2(-2, 1),
+            new Vector2(-2, -1),
+            new Vector2(-1, 2),
+            new Vector2(-1, -2),
+            //new Vector2(1, 0),
+            //new Vector2(0, 1),
+            //new Vector2(-1, 0),
+            //new Vector2(0, -1),
+            //new Vector2(-1, -1),
+            //new Vector2(1, 1),
         ];
         result: MazeVisitItem[];
 
