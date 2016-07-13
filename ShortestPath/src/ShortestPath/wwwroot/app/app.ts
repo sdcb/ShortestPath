@@ -215,10 +215,10 @@
     class MazeSystem {
         input = MazeInput.createDefault();
         travels = [
-            new Vector2(1, 0),
-            new Vector2(0, 1),
-            new Vector2(0, -1),
-            new Vector2(-1, 0),
+            new Vector2(2, 1),
+            new Vector2(1, 2),
+            new Vector2(2, -1),
+            new Vector2(1, -2),
         ];
         result: MazeVisitItem[];
 
@@ -261,7 +261,7 @@
                     let np = this.system.result[i + 1];
 
                     if (np) {
-                        this.canvas.drawLine(sx(p.p.x + 0.5), sy(p.p.y + 0.5), sx(np.p.x + 0.5), sy(np.p.y + 0.5), "red", 5);
+                        this.canvas.drawLine(sx(p.p.x + 0.5), sy(p.p.y + 0.5), sx(np.p.x + 0.5), sy(np.p.y + 0.5), "pink", 5);
                     }
                 }
             }
