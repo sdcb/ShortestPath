@@ -255,8 +255,14 @@
             let sy = this.sy;
 
             if (this.system.result) {
-                for (let p of this.system.result) {
-                    this.canvas.fillRect(sx(p.p.x), sy(p.p.y), this.edgeLength(), this.edgeLength(), "gray");
+                this.canvas.beginPath();
+                for (let i = 0; i < this.system.result.length; ++i) {
+                    let p = this.system.result[i];
+                    let np = this.system.result[i + 1];
+
+                    if (np) {
+                        this.canvas.drawLine(sx(p.p.x + 0.5), sy(p.p.y + 0.5), sx(np.p.x + 0.5), sy(np.p.y + 0.5), "red", 5);
+                    }
                 }
             }
         }
@@ -296,7 +302,7 @@
             for (let i = 0; i <= this.system.input.height; ++i) {
                 this.canvas.line(sx(0), sy(i), sx(this.system.input.width), sy(i));
             }
-            this.canvas.stroke();
+            this.canvas.stroke("black", 1);
         }
 
         constructor(canvas: CanvasManager) {

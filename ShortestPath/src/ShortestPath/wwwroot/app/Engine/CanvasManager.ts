@@ -27,6 +27,14 @@
             this.ctx.textBaseline = baseline;
         }
 
+        get lineWidth() {
+            return this.ctx.lineWidth;
+        }
+
+        set lineWidth(value: number) {
+            this.ctx.lineWidth = value;
+        }
+
         resizeTo(width: number, height: number) {
             let font = this.font;
             let textBaseLine = this.textBaseLine;
