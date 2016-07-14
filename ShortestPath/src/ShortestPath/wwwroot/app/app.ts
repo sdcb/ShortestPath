@@ -64,26 +64,26 @@
 
         static createDefault() {
             let array = [
-                "+                   ",
+                "+   *               ",
+                "    *               ",
                 "    * *****         ",
-                "    *               ",
-                "   **               ", 
-                "    *               ",
+                "   **     *         ", 
                 "    *     *         ",
-                "          *         ",
                 "    *     *         ",
+                "    *     *         ",
+                "    *  ****         ",
+                "    *  *  ****      ",
+                "    *  *     *****  ",
+                "    *  *  *  *      ",
+                "**  *  *  *  *      ",
                 "    *     *  *      ",
-                "    *     *  *****  ",
-                "    *     *  *      ",
-                "***       *  *      ",
-                "    *        *      ",
                 " **********  *  ****",
                 "          *  *      ",
                 "             *      ",
                 "        ******      ",
-                "                    ",
-                "        *           ",
-                "        *          O"
+                "             *      ",
+                "        *    *      ",
+                "        *    *     O"
             ];
             return new MazeInput(array);
         }
@@ -231,6 +231,7 @@
             let ctx = new MazeTravelContext(input, travels);
             let defer = $.Deferred<MazeVisitItem[]>();
 
+            //ctx.onComplete.connect(v => defer.resolve(ctx.availablePoints));
             ctx.onComplete.connect(v => defer.resolve(v));
             ctx.onNoResult.connect(() => defer.reject());
             ctx.travel();
@@ -250,12 +251,16 @@
             new HourseBlocks(-2, -1),
             new HourseBlocks(-1, 2),
             new HourseBlocks(-1, -2),
-            //new Vector2(1, 0),
-            //new Vector2(0, 1),
-            //new Vector2(-1, 0),
-            //new Vector2(0, -1),
-            //new Vector2(-1, -1),
-            //new Vector2(1, 1),
+
+            //new TravelBlock(1, 0),
+            //new TravelBlock(0, 1),
+            //new TravelBlock(-1, 0),
+            //new TravelBlock(0, -1),
+
+            //new TravelBlock(1, -1),
+            //new TravelBlock(1, 1),
+            //new TravelBlock(-1, 1),
+            //new TravelBlock(-1, -1),
         ];
         result: MazeVisitItem[];
 
@@ -293,14 +298,15 @@
 
             if (this.system.result) {
                 this.canvas.beginPath();
-                for (let i = 0; i < this.system.result.length; ++i) {
+                for (let i = this.system.result.length - 1; i >= 0; --i) {
                     let p = this.system.result[i];
-                    let np = this.system.result[i + 1];
+                    let np = p.from;
 
                     if (np) {
-                        this.canvas.drawLine(sx(p.p.x + 0.5), sy(p.p.y + 0.5), sx(np.p.x + 0.5), sy(np.p.y + 0.5), "pink", 5);
+                        this.canvas.line(sx(p.p.x + 0.5), sy(p.p.y + 0.5), sx(np.p.x + 0.5), sy(np.p.y + 0.5));
                     }
                 }
+                this.canvas.stroke("pink", 5);
             }
         }
 
