@@ -1,4 +1,4 @@
-﻿namespace SpiralMatrix {
+﻿namespace ShortestPath {
     type IPromiseEventCallback<T> = (value: T) => JQueryPromise<any> | any;
     type IPromiseEventCallbackVoid = () => JQueryPromise<any> | any;
 

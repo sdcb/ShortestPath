@@ -1,4 +1,4 @@
-﻿namespace SpiralMatrix {
+﻿namespace ShortestPath {
     export class AlignToWindowUtil extends RendererBase {
         constructor(canvas: CanvasManager) {
             super(canvas);

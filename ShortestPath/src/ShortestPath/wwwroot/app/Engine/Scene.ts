@@ -1,4 +1,4 @@
-﻿namespace SpiralMatrix {
+﻿namespace ShortestPath {
     export class Scene extends RendererBase {
         protected canvas: CanvasManager;
         private loop = new TimedGameLoop();

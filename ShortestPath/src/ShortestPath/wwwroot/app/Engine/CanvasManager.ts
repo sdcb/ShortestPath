@@ -1,4 +1,4 @@
-﻿namespace SpiralMatrix {
+﻿namespace ShortestPath {
     type IBrushType = string | CanvasGradient | CanvasPattern;
     type ITextBaseLineType = "top" | "hanging" | "middle" | "alphabetic" | "ideographic" | "bottom";
 

@@ -1,4 +1,4 @@
-﻿namespace SpiralMatrix {
+﻿namespace ShortestPath {
     export class SimpleGameLoop {
         public onRender = new PromiseEvent<number>();
         public onUpdate = new PromiseEvent<number>();

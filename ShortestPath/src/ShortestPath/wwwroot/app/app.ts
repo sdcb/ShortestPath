@@ -1,4 +1,4 @@
-﻿namespace SpiralMatrix {
+﻿namespace ShortestPath {
     function unwrapNull<T>(v: T | null | undefined) {
         if (v === null || v === undefined) {
             throw new Error("value should never be null.");

@@ -1,4 +1,4 @@
-﻿namespace SpiralMatrix {
+﻿namespace ShortestPath {
     export class float3x2 {
         constructor(
             public m11: number,

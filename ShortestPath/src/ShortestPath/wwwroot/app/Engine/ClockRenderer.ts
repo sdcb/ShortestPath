@@ -1,4 +1,4 @@
-﻿namespace SpiralMatrix {
+﻿namespace ShortestPath {
     export class ClockRenderer extends RendererBase {
         radius() {
             return (Math.min(this.canvas.width(), this.canvas.height()) - 15) / 2;

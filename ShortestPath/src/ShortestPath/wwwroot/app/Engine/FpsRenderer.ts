@@ -1,4 +1,4 @@
-﻿namespace SpiralMatrix {
+﻿namespace ShortestPath {
     const RefreshFpsInterval = 1;
     class FpsContext {
         fps = 0;

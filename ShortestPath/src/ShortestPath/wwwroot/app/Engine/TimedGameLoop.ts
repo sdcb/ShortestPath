@@ -1,4 +1,4 @@
-﻿namespace SpiralMatrix {
+﻿namespace ShortestPath {
     export class TimedGameLoop extends SimpleGameLoop {
         private _totalRenderTime = 0;
         private _lastFrameTime = new Date();

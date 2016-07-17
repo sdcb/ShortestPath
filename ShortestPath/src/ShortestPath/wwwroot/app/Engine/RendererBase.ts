@@ -1,4 +1,4 @@
-﻿namespace SpiralMatrix {
+﻿namespace ShortestPath {
     export abstract class RendererBase {
         private _order = 0;
         onSetOrder = new PromiseEvent<number>();
