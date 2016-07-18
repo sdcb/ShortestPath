@@ -347,11 +347,6 @@
             }
             this.canvas.stroke("black", 1);
         }
-
-        constructor(canvas: CanvasManager) {
-            super(canvas);
-            console.log(this);
-        }
     }
 
     let scene = new Scene(<HTMLCanvasElement>document.querySelector("canvas"));
