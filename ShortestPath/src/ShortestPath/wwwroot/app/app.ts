@@ -243,19 +243,19 @@
     class MazeSystem {
         input = MazeInput.createDefault();
         travels = [
-            new HourseBlocks(2, 1),
-            new HourseBlocks(2, -1),
-            new HourseBlocks(1, 2),
-            new HourseBlocks(1, -2),
-            new HourseBlocks(-2, 1),
-            new HourseBlocks(-2, -1),
-            new HourseBlocks(-1, 2),
-            new HourseBlocks(-1, -2),
+            //new HourseBlocks(2, 1),
+            //new HourseBlocks(2, -1),
+            //new HourseBlocks(1, 2),
+            //new HourseBlocks(1, -2),
+            //new HourseBlocks(-2, 1),
+            //new HourseBlocks(-2, -1),
+            //new HourseBlocks(-1, 2),
+            //new HourseBlocks(-1, -2),
 
-            //new TravelBlock(1, 0),
-            //new TravelBlock(0, 1),
-            //new TravelBlock(-1, 0),
-            //new TravelBlock(0, -1),
+            new TravelBlock(1, 0),
+            new TravelBlock(0, 1),
+            new TravelBlock(-1, 0),
+            new TravelBlock(0, -1),
 
             //new TravelBlock(1, -1),
             //new TravelBlock(1, 1),
@@ -284,7 +284,7 @@
 
         render(time: number) {
             this.canvas.setTransform(this.centerTransform());
-            this.drawGrid();
+            //this.drawGrid();
             this.drawMaze();
             this.drawDirection();
         }
